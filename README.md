@@ -1,12 +1,11 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/2vn1um9vt7h6d4qq?svg=true)](https://ci.appveyor.com/project/denis-shubochkin/ahj-diplom)
 
-#Бот органайзер
+# Бот органайзер
 
 ![](./src/pic/readme/1.jpg)
 ***
-##Обязательные функции:
+## Обязательные функции:
 
-<<<<<<< HEAD
 - Сохранение в истории ссылок и текстовых сообщений
 
 ![](./src/pic/readme/textAndLinks.jpg)
@@ -62,7 +61,7 @@
 ![](./src/pic/readme/more.jpg)
 
 ***
-##Дополнительные функции:
+## Дополнительные функции:
 
 - Отправка геолокации
 
@@ -128,6 +127,3 @@
 Кликните на любой смайлик чтобы добавить его к тексту сообщения
 
 ![](./src/pic/readme/emoji.jpg)
-=======
-![](./src/pic/readme/1.jpg)
->>>>>>> f9fb5f24ab15328d4b1ac6b5d19a3622bb5b34b2
