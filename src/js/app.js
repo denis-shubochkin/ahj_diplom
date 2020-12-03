@@ -42,7 +42,7 @@ emojiArr.forEach((el) => {
 
 // Создание сообщения в ленте чата
 
-function addMess(prepend, send, type, cont, coordsRes, author, date) {
+function addMess(prepend, send, type, cont, coordsRes, author, date, name) {
   if (type === 'text') {
     let dateInt;
     if (date === null) {
@@ -141,6 +141,10 @@ function addMess(prepend, send, type, cont, coordsRes, author, date) {
       dateEl.textContent = `${dateInt}, Бот`;
     }
     mess.appendChild(dateEl);
+    const title = document.createElement('div');
+    title.classList.add('media-title');
+    title.textContent = name;
+    mess.appendChild(title);
     const img = document.createElement('img');
     img.classList.add('img');
     mess.appendChild(img);
@@ -227,6 +231,10 @@ function addMess(prepend, send, type, cont, coordsRes, author, date) {
       dateEl.textContent = `${dateInt}, Бот`;
     }
     mess.appendChild(dateEl);
+    const title = document.createElement('div');
+    title.classList.add('media-title');
+    title.textContent = name;
+    mess.appendChild(title);
     const audio = document.createElement('audio');
     audio.classList.add('audio');
     audio.controls = true;
@@ -258,6 +266,8 @@ function addMess(prepend, send, type, cont, coordsRes, author, date) {
         };
       }
     }
+    console.log(cont.name);
+    console.log(audio.audioTracks);
     mess.appendChild(coords);
   }
   if (type === 'video') {
@@ -290,6 +300,10 @@ function addMess(prepend, send, type, cont, coordsRes, author, date) {
       dateEl.textContent = `${dateInt}, Бот`;
     }
     mess.appendChild(dateEl);
+    const title = document.createElement('div');
+    title.classList.add('media-title');
+    title.textContent = name;
+    mess.appendChild(title);
     const video = document.createElement('video');
     video.classList.add('video');
     video.controls = true;
@@ -335,11 +349,11 @@ function fileLoad(data) {
         const coordsRes = pos.coords;
         console.log(el);
         if (el.type.startsWith('image')) {
-          addMess(0, 1, 'img', el, coordsRes, 'You', null);
+          addMess(0, 1, 'img', el, coordsRes, 'You', null, el.name);
         } else if (el.type.startsWith('audio')) {
-          addMess(0, 1, 'audio', el, coordsRes, 'You', null);
+          addMess(0, 1, 'audio', el, coordsRes, 'You', null, el.name);
         } else if (el.type.startsWith('video')) {
-          addMess(0, 1, 'video', el, coordsRes, 'You', null);
+          addMess(0, 1, 'video', el, coordsRes, 'You', null, el.name);
         } else {
           alert('Данный формат не поддерживается');
           throw new Error('Wrong format');
@@ -376,11 +390,11 @@ function fileLoad(data) {
       data.forEach((el) => {
         const coordsRes = 0;
         if (el.type.startsWith('image')) {
-          addMess(0, 1, 'img', el, coordsRes, 'You', null);
+          addMess(0, 1, 'img', el, coordsRes, 'You', null, el.name);
         } else if (el.type.startsWith('audio')) {
-          addMess(0, 1, 'audio', el, coordsRes, 'You', null);
+          addMess(0, 1, 'audio', el, coordsRes, 'You', null, el.name);
         } else if (el.type.startsWith('video')) {
-          addMess(0, 1, 'video', el, coordsRes, 'You', null);
+          addMess(0, 1, 'video', el, coordsRes, 'You', null, el.name);
         }
         countMess += 1;
         messages.scrollTop = messages.scrollHeight;
@@ -437,6 +451,10 @@ organizer.addEventListener('drop', (evt) => {
 // функция подгрузки первой десятки сообщений
 
 function getTen() {
+  const loading = document.createElement('div');
+  loading.classList.add('loading');
+  loading.textContent = 'Загружаю...';
+  messages.appendChild(loading);
   const xhr = new XMLHttpRequest();
   const params = new URLSearchParams();
   params.append('method', 'firstTen');
@@ -446,6 +464,7 @@ function getTen() {
     if (xhr.status >= 200 && xhr.status < 300) {
       try {
         if (xhr.responseText) {
+          loading.remove();
           const d = JSON.parse(xhr.responseText);
           const data = d.arr;
           countMess = d.len;
@@ -453,11 +472,11 @@ function getTen() {
             if (data[i].type === 'img') {
               const str = new Uint8Array(data[i].file.data);
               const blob = new Blob([str], { type: 'image/png' });
-              addMess(0, 0, data[i].type, blob, data[i].coords, data[i].author, data[i].date);
+              addMess(0, 0, data[i].type, blob, data[i].coords, data[i].author, data[i].date, data[i].name);
             } else if (data[i].type === 'audio') {
               const str = new Uint8Array(data[i].file.data);
               const blob = new Blob([str], { type: 'audio/mpeg' });
-              addMess(0, 0, data[i].type, blob, data[i].coords, data[i].author, data[i].date);
+              addMess(0, 0, data[i].type, blob, data[i].coords, data[i].author, data[i].date, data[i].name);
             } else if (data[i].type === 'video') {
               const str = new Uint8Array(data[i].file.data);
               const blob = new Blob([str], { type: 'video/mp4' });
@@ -468,6 +487,7 @@ function getTen() {
                 blob, data[i].coords,
                 data[i].author,
                 data[i].date,
+                data[i].name
               );
             } else {
               addMess(
@@ -478,6 +498,7 @@ function getTen() {
                 data[i].coords,
                 data[i].author,
                 data[i].date,
+                0
               );
             }
           }
@@ -514,15 +535,15 @@ function moreTen() {
             if (data[i].type === 'img') {
               const str = new Uint8Array(data[i].file.data);
               const blob = new Blob([str], { type: 'image/png' });
-              addMess(1, 0, data[i].type, blob, data[i].coords, data[i].author, data[i].date);
+              addMess(1, 0, data[i].type, blob, data[i].coords, data[i].author, data[i].date, data[i].name);
             } else if (data[i].type === 'audio') {
               const str = new Uint8Array(data[i].file.data);
               const blob = new Blob([str], { type: 'audio/mpeg' });
-              addMess(1, 0, data[i].type, blob, data[i].coords, data[i].author, data[i].date);
+              addMess(1, 0, data[i].type, blob, data[i].coords, data[i].author, data[i].date, data[i].name);
             } else if (data[i].type === 'video') {
               const str = new Uint8Array(data[i].file.data);
               const blob = new Blob([str], { type: 'video/mp4' });
-              addMess(1, 0, data[i].type, blob, data[i].coords, data[i].author, data[i].date);
+              addMess(1, 0, data[i].type, blob, data[i].coords, data[i].author, data[i].date, data[i].name);
             } else {
               addMess(
                 1,
@@ -531,7 +552,7 @@ function moreTen() {
                 data[i].content,
                 data[i].coords,
                 data[i].author,
-                data[i].date,
+                0
               );
             }
           }
@@ -597,10 +618,22 @@ ws.addEventListener('message', (evt) => {
     if (data.includes('@weather')) {
       data = data.replace('@weather', '');
     }
+    else if (data.includes('@traffic')) {
+      data = data.replace('@traffic', '');
+    }
+    else if (data.includes('@corona')) {
+      data = data.replace('@corona', '');
+    }
+    else if (data.includes('@currency')) {
+      data = data.replace('@currency', '');
+    }
+    else if (data.includes('@petrol')) {
+      data = data.replace('@petrol', '');
+    }
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((pos) => {
         const coordsRes = pos.coords;
-        addMess(0, 1, 'text', data, coordsRes, 'Bot', null);
+        addMess(0, 1, 'text', data, coordsRes, 'Bot', null, 0);
         countMess += 1;
         messages.scrollTop = messages.scrollHeight;
         messagesAr = document.querySelectorAll('.mess');
@@ -613,7 +646,7 @@ ws.addEventListener('message', (evt) => {
         }
       }, () => {
         const coordsRes = 0;
-        addMess(0, 1, 'text', data, coordsRes, 'Bot', null);
+        addMess(0, 1, 'text', data, coordsRes, 'Bot', null, 0);
         countMess += 1;
         messages.scrollTop = messages.scrollHeight;
         messagesAr = document.querySelectorAll('.mess');
@@ -637,7 +670,7 @@ input.addEventListener('keyup', (evt) => {
       navigator.geolocation.getCurrentPosition((pos) => {
         emo.style.display = 'none';
         const coordsRes = pos.coords;
-        addMess(0, 1, 'text', evt.target.value, coordsRes, 'You', null);
+        addMess(0, 1, 'text', evt.target.value, coordsRes, 'You', null, 0);
         countMess += 1;
         messages.scrollTop = messages.scrollHeight;
         messagesAr = document.querySelectorAll('.mess');
@@ -650,7 +683,7 @@ input.addEventListener('keyup', (evt) => {
         }
       }, () => {
         const coordsRes = 0;
-        addMess(0, 1, 'text', evt.target.value, coordsRes, 'You', null);
+        addMess(0, 1, 'text', evt.target.value, coordsRes, 'You', null, 0);
         countMess += 1;
         messages.scrollTop = messages.scrollHeight;
         messagesAr = document.querySelectorAll('.mess');

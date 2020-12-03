@@ -37,6 +37,75 @@ function genWeather() {
   return '1';
 }
 
+function genTraffic() {
+  const n = Math.floor(Math.random() * 101);
+  if (n < 25) {
+    return 'На дорогах свободно';
+  }
+  if (n > 25 && n <= 50) {
+    return 'Небольшие заторы';
+  }
+  if (n > 50 && n <= 75) {
+    return 'Очень плотное движение';
+  }
+  if (n > 75) {
+    return 'Город стоит';
+  }
+  return '1';
+}
+
+function genCorona() {
+  const n = Math.floor(Math.random() * 101);
+  if (n < 25) {
+    return 'Заболевших в вашем городе 1000 человек';
+  }
+  if (n > 25 && n <= 50) {
+    return 'Заболевших в вашем городе 2000 человек';
+  }
+  if (n > 50 && n <= 75) {
+    return 'Заболевших в вашем городе 5000 человек. Лучше оставайтесь дома.';
+  }
+  if (n > 75) {
+    return 'Заболевших в вашем городе 10000 человек. Сидите дома!';
+  }
+  return '1';
+}
+
+function genCurrency() {
+  const n = Math.floor(Math.random() * 101);
+  if (n < 25) {
+    return 'USD:78.00 EUR: 85.00';
+  }
+  if (n > 25 && n <= 50) {
+    return 'USD:79.00 EUR: 86.00';
+  }
+  if (n > 50 && n <= 75) {
+    return 'USD:77.00 EUR: 84.00';
+  }
+  if (n > 75) {
+    return 'USD:80.00 EUR: 90.00';
+  }
+  return '1';
+}
+
+function genPetrol() {
+  const n = Math.floor(Math.random() * 101);
+  if (n < 25) {
+    return 'Цена за баррель: 40.38';
+  }
+  if (n > 25 && n <= 50) {
+    return 'Цена за баррель: 45.32';
+  }
+  if (n > 50 && n <= 75) {
+    return 'Цена за баррель: 58.98';
+  }
+  if (n > 75) {
+    return 'Цена за баррель: 43.77';
+  }
+  return '1';
+}
+
+
 // app.use(koaStatic(publicF));
 app.use(koaBody({
   urlencoded: true,
@@ -137,6 +206,7 @@ app.use(async (ctx) => {
           messages.push({
             type: 'img',
             author: 'You',
+            name: ctx.request.files.att.name,
             content: dest,
             date: ctx.request.body.date,
             coords: JSON.parse(ctx.request.body.coords),
@@ -146,6 +216,7 @@ app.use(async (ctx) => {
           messages.push({
             type: 'audio',
             author: 'You',
+            name: ctx.request.files.att.name,
             content: dest,
             date: ctx.request.body.date,
             coords: JSON.parse(ctx.request.body.coords),
@@ -155,6 +226,7 @@ app.use(async (ctx) => {
           messages.push({
             type: 'video',
             author: 'You',
+            name: ctx.request.files.att.name,
             content: dest,
             date: ctx.request.body.date,
             coords: JSON.parse(ctx.request.body.coords),
@@ -218,7 +290,7 @@ wsServer.on('connection', (ws) => {
         } else notifications[i].resend = 1;
       }
     });
-  }, 60000);
+  }, 10000);
 
 
   ws.on('message', (msg) => {
@@ -249,6 +321,18 @@ wsServer.on('connection', (ws) => {
         ws.send('Напоминание создано');
       } else if (obj.content.startsWith('@weather')) {
         ws.send(`@weather${genWeather()}`);
+      }
+      else if (obj.content.startsWith('@traffic')) {
+        ws.send(`@traffic${genTraffic()}`);
+      }
+      else if (obj.content.startsWith('@corona')) {
+        ws.send(`@corona${genCorona()}`);
+      }
+      else if (obj.content.startsWith('@currency')) {
+        ws.send(`@currency${genCurrency()}`);
+      }
+      else if (obj.content.startsWith('@petrol')) {
+        ws.send(`@petrol${genPetrol()}`);
       }
       messages.push(obj);
     }

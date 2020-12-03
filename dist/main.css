@@ -56,6 +56,19 @@ margin-left: 10px;
   box-sizing: border-box;
 }
 
+.loading {
+  width: 150px;
+  height: 30px;
+  background-color: rgb(255, 248, 220);
+  border: 1px solid black;
+  border-radius: 7px;
+  padding: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
 .lenta > div:first-of-type{
   margin-top: auto;
 }
@@ -85,6 +98,11 @@ margin-left: 10px;
 .date {
   text-align: left;
   font-size: x-small;
+}
+
+.media-title {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .content {
