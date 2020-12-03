@@ -463,8 +463,8 @@ function getTen() {
   xhr.addEventListener('load', () => {
     if (xhr.status >= 200 && xhr.status < 300) {
       try {
+        loading.remove();
         if (xhr.responseText) {
-          loading.remove();
           const d = JSON.parse(xhr.responseText);
           const data = d.arr;
           countMess = d.len;
