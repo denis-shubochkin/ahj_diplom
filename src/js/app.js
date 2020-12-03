@@ -11,7 +11,7 @@ const emoBut = document.querySelector('.emo-img');
 let messagesAr = document.querySelectorAll('.mess');
 const sendObj = {};
 let countMess = 0;
-const ws = new WebSocket('ws://localhost:7070/ws');
+const ws = new WebSocket('ws://zippo1095.herokuapp.com:7070/ws');
 ws.binaryType = 'blob';
 const emojiArr = em();
 
@@ -372,7 +372,7 @@ function fileLoad(data) {
         formData.append('date', sendObj.date);
         formData.append('coords', JSON.stringify(sendObj.coords));
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', `http://localhost:7070/?${params}`);
+        xhr.open('POST', `https://zippo1095.herokuapp.com:7070/?${params}`);
         xhr.send(formData);
         xhr.addEventListener('load', () => {
           if (xhr.status >= 200 && xhr.status < 300) {
@@ -410,7 +410,7 @@ function fileLoad(data) {
         formData.append('date', sendObj.date);
         formData.append('coords', JSON.stringify(sendObj.coords));
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', `http://localhost:7070/?${params}`);
+        xhr.open('POST', `https://zippo1095.herokuapp.com:7070/?${params}`);
         xhr.send(formData);
         xhr.addEventListener('load', () => {
           if (xhr.status >= 200 && xhr.status < 300) {
@@ -458,7 +458,7 @@ function getTen() {
   const xhr = new XMLHttpRequest();
   const params = new URLSearchParams();
   params.append('method', 'firstTen');
-  xhr.open('GET', `http://localhost:7070/?${params}`);
+  xhr.open('GET', `https://zippo1095.herokuapp.com:7070/?${params}`);
   xhr.send();
   xhr.addEventListener('load', () => {
     if (xhr.status >= 200 && xhr.status < 300) {
@@ -541,7 +541,7 @@ function moreTen() {
   const params = new URLSearchParams();
   params.append('method', 'moreTen');
   params.append('ct', messagesAr.length);
-  xhr.open('GET', `http://localhost:7070/?${params}`);
+  xhr.open('GET', `https://zippo1095.herokuapp.com:7070/?${params}`);
   xhr.send();
   xhr.addEventListener('load', () => {
     if (xhr.status >= 200 && xhr.status < 300) {
