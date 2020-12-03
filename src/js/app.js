@@ -472,11 +472,28 @@ function getTen() {
             if (data[i].type === 'img') {
               const str = new Uint8Array(data[i].file.data);
               const blob = new Blob([str], { type: 'image/png' });
-              addMess(0, 0, data[i].type, blob, data[i].coords, data[i].author, data[i].date, data[i].name);
+              addMess(
+                0,
+                0,
+                data[i].type,
+                blob, data[i].coords,
+                data[i].author,
+                data[i].date,
+                data[i].name,
+              );
             } else if (data[i].type === 'audio') {
               const str = new Uint8Array(data[i].file.data);
               const blob = new Blob([str], { type: 'audio/mpeg' });
-              addMess(0, 0, data[i].type, blob, data[i].coords, data[i].author, data[i].date, data[i].name);
+              addMess(
+                0,
+                0,
+                data[i].type,
+                blob,
+                data[i].coords,
+                data[i].author,
+                data[i].date,
+                data[i].name,
+              );
             } else if (data[i].type === 'video') {
               const str = new Uint8Array(data[i].file.data);
               const blob = new Blob([str], { type: 'video/mp4' });
@@ -487,7 +504,7 @@ function getTen() {
                 blob, data[i].coords,
                 data[i].author,
                 data[i].date,
-                data[i].name
+                data[i].name,
               );
             } else {
               addMess(
@@ -498,7 +515,7 @@ function getTen() {
                 data[i].coords,
                 data[i].author,
                 data[i].date,
-                0
+                0,
               );
             }
           }
@@ -535,15 +552,42 @@ function moreTen() {
             if (data[i].type === 'img') {
               const str = new Uint8Array(data[i].file.data);
               const blob = new Blob([str], { type: 'image/png' });
-              addMess(1, 0, data[i].type, blob, data[i].coords, data[i].author, data[i].date, data[i].name);
+              addMess(
+                1,
+                0,
+                data[i].type,
+                blob,
+                data[i].coords,
+                data[i].author,
+                data[i].date,
+                data[i].name,
+              );
             } else if (data[i].type === 'audio') {
               const str = new Uint8Array(data[i].file.data);
               const blob = new Blob([str], { type: 'audio/mpeg' });
-              addMess(1, 0, data[i].type, blob, data[i].coords, data[i].author, data[i].date, data[i].name);
+              addMess(
+                1,
+                0,
+                data[i].type,
+                blob,
+                data[i].coords,
+                data[i].author,
+                data[i].date,
+                data[i].name,
+              );
             } else if (data[i].type === 'video') {
               const str = new Uint8Array(data[i].file.data);
               const blob = new Blob([str], { type: 'video/mp4' });
-              addMess(1, 0, data[i].type, blob, data[i].coords, data[i].author, data[i].date, data[i].name);
+              addMess(
+                1,
+                0,
+                data[i].type,
+                blob,
+                data[i].coords,
+                data[i].author,
+                data[i].date,
+                data[i].name,
+              );
             } else {
               addMess(
                 1,
@@ -552,7 +596,7 @@ function moreTen() {
                 data[i].content,
                 data[i].coords,
                 data[i].author,
-                0
+                0,
               );
             }
           }
@@ -617,17 +661,13 @@ ws.addEventListener('message', (evt) => {
     let { data } = evt;
     if (data.includes('@weather')) {
       data = data.replace('@weather', '');
-    }
-    else if (data.includes('@traffic')) {
+    } else if (data.includes('@traffic')) {
       data = data.replace('@traffic', '');
-    }
-    else if (data.includes('@corona')) {
+    } else if (data.includes('@corona')) {
       data = data.replace('@corona', '');
-    }
-    else if (data.includes('@currency')) {
+    } else if (data.includes('@currency')) {
       data = data.replace('@currency', '');
-    }
-    else if (data.includes('@petrol')) {
+    } else if (data.includes('@petrol')) {
       data = data.replace('@petrol', '');
     }
     if (navigator.geolocation) {

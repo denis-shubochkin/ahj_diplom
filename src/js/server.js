@@ -321,17 +321,13 @@ wsServer.on('connection', (ws) => {
         ws.send('Напоминание создано');
       } else if (obj.content.startsWith('@weather')) {
         ws.send(`@weather${genWeather()}`);
-      }
-      else if (obj.content.startsWith('@traffic')) {
+      } else if (obj.content.startsWith('@traffic')) {
         ws.send(`@traffic${genTraffic()}`);
-      }
-      else if (obj.content.startsWith('@corona')) {
+      } else if (obj.content.startsWith('@corona')) {
         ws.send(`@corona${genCorona()}`);
-      }
-      else if (obj.content.startsWith('@currency')) {
+      } else if (obj.content.startsWith('@currency')) {
         ws.send(`@currency${genCurrency()}`);
-      }
-      else if (obj.content.startsWith('@petrol')) {
+      } else if (obj.content.startsWith('@petrol')) {
         ws.send(`@petrol${genPetrol()}`);
       }
       messages.push(obj);
