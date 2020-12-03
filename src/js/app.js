@@ -11,7 +11,7 @@ const emoBut = document.querySelector('.emo-img');
 let messagesAr = document.querySelectorAll('.mess');
 const sendObj = {};
 let countMess = 0;
-const ws = new WebSocket('ws://zippo1095.herokuapp.com:7070/ws');
+const ws = new WebSocket('wss://zippo1095.herokuapp.com:7070/ws');
 ws.binaryType = 'blob';
 const emojiArr = em();
 
