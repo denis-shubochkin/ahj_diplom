@@ -247,7 +247,7 @@ app.use(async (ctx) => {
 // eslint-disable-next-line no-unused-vars
 const port = process.env.PORT || 7070;
 // eslint-disable-next-line no-unused-vars
-const server = http.createServer(app.callback()).listen(port);
+const server = http.createServer(app.callback()).listen();
 const wsServer = new WS.Server({ server });
 
 
